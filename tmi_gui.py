@@ -411,6 +411,7 @@ class Server:
         self.data, self.backend = data, backend
         self.token = secrets.token_urlsafe(24)
         self.payload = None
+        self.last_poll = 0.0
         srv = self
 
         class Handler(BaseHTTPRequestHandler):
@@ -479,6 +480,7 @@ class Server:
                     lang = (q.get("lang") or ["Pl_Pl"])[0]
                     return self._send(200, srv.data.texts(lang))
                 if path == "/api/state":
+                    srv.last_poll = time.time()          # okno żyje (używane przy oknie w przeglądarce)
                     return self._send(200, b.state())
                 return self._send(404, {"error": "brak"})
 
@@ -556,16 +558,47 @@ def webview2_version():
     return None
 
 
+def unblock_downloaded_files():
+    """Paczka pobrana z internetu: Windows dopisuje do każdego wypakowanego pliku znacznik „pobrane z internetu”
+    (strumień NTFS Zone.Identifier). .NET (pythonnet, WebView2 w pywebview) odmawia wtedy ładowania bibliotek
+    i własne okno się nie otwiera. Usuwamy znacznik z plików programu (tylko w folderze programu) – to samo,
+    co „Właściwości → Odblokuj”. Bez znacznika / na innym systemie plików – nic się nie dzieje."""
+    if os.name != "nt" or not core.FROZEN:
+        return 0
+    n = 0
+    for root, _dirs, files in os.walk(core.RES_DIR):
+        for f in files:
+            if f.lower().endswith((".dll", ".pyd", ".exe", ".json", ".js", ".html", ".css")):
+                try:
+                    os.remove(os.path.join(root, f) + ":Zone.Identifier")
+                    n += 1
+                except OSError:
+                    pass
+    try:
+        os.remove(sys.executable + ":Zone.Identifier")
+    except OSError:
+        pass
+    return n
+
+
 def run_webview(url):
     """1) Własne okno: pywebview + WebView2. Zwraca False, gdy się nie da."""
-    if not webview2_version():
-        print("WebView2 nie znaleziono – próbuję przeglądarki.")
+    ver = webview2_version()
+    if not ver:
+        log("Okno: brak WebView2 – próbuję przeglądarki.")
         return False
     try:
+        n = unblock_downloaded_files()
+        if n:
+            log(f"Odblokowano {n} plików pobranych z internetu (Zone.Identifier).")
+    except Exception:
+        log("Odblokowanie plików nie powiodło się:", traceback.format_exc())
+    try:
         import webview
-    except ImportError:
-        print("Brak biblioteki pywebview (pip install pywebview) – próbuję przeglądarki.")
+    except Exception:
+        log("Okno: nie da się załadować pywebview – próbuję przeglądarki.", traceback.format_exc())
         return False
+    log("Okno: pywebview", getattr(webview, "__version__", "?"), "WebView2", ver)
     try:
         webview.create_window(APP_TITLE, url, width=1440, height=920, min_size=(1000, 640),
                               background_color="#0b1012", text_select=True)
@@ -575,8 +608,8 @@ def run_webview(url):
         except TypeError:                            # starsza wersja pywebview
             webview.start(gui="edgechromium")
         return True
-    except Exception as e:
-        print(f"pywebview nie zadziałał ({e}) – próbuję przeglądarki.")
+    except Exception:
+        log("Okno: pywebview nie zadziałał – próbuję przeglądarki.", traceback.format_exc())
         return False
 
 
@@ -596,8 +629,13 @@ def find_browser():
     return None
 
 
-def run_browser(url):
-    """2) Przeglądarka w trybie aplikacji (osobny profil – zamknięcie okna kończy program)."""
+BROWSER_IDLE_EXIT = 90      # s bez odpytywania przez okno = okno zamknięte (zminimalizowane karty odpytują rzadziej)
+
+
+def run_browser(url, server=None):
+    """2) Przeglądarka w trybie aplikacji (osobny profil). Program działa, dopóki okno go odpytuje:
+    przeglądarka bywa już uruchomiona i wtedy nasz proces przekazuje jej okno i od razu się kończy
+    (błąd z 19.10: program wyłączał się i okno pokazywało „127.0.0.1 refused to connect”)."""
     exe = find_browser()
     if not exe:
         return False
@@ -608,9 +646,24 @@ def run_browser(url):
                               "--no-default-browser-check"])
     except OSError:
         return False
-    print(f"Okno w przeglądarce: {os.path.basename(exe)}. Zamknij okno, aby zakończyć.")
-    p.wait()
-    return True
+    log("Okno: przeglądarka", os.path.basename(exe))
+    if server is None:
+        p.wait()
+        return True
+    started, own = time.time(), False
+    while True:
+        time.sleep(1)
+        now = time.time()
+        alive = p.poll() is None
+        if alive and now - started > 5:
+            own = True                                   # nasz proces trzyma okno
+        if own and not alive:
+            log("Okno: zamknięte.")
+            return True
+        idle = now - (server.last_poll or started)
+        if idle > BROWSER_IDLE_EXIT and (server.last_poll or now - started > 120):
+            log("Okno: brak odpytywania", int(idle), "s – kończę.")
+            return True
 
 
 def run_tk():
@@ -654,7 +707,7 @@ def main():
         log("Serwer:", f"http://127.0.0.1:{server.port}/")
         if "--przegladarka" not in args and run_webview(server.url):
             return
-        if run_browser(server.url):
+        if run_browser(server.url, server):
             return
         print("Nie znaleziono WebView2 ani przeglądarki – uruchamiam stare okno.")
         server.stop()

@@ -8,7 +8,7 @@ rem  2) buduje release\dist\TooManyItems\TooManyItems.exe
 rem  3) pakuje wszystko do release\TooManyItems_ED_v%VER%.zip
 rem  Nic nie zmienia w folderze gry ani w plikach projektu.
 rem ===========================================================================
-set VER=1.0.0
+set VER=1.0.1
 cd /d "%~dp0"
 
 where python >nul 2>nul || (echo Nie znaleziono Pythona. & pause & exit /b 1)
@@ -33,7 +33,9 @@ copy /y ..\LICENSE dist\TooManyItems\LICENSE.txt >nul
 
 echo [3/3] Pakuje ZIP ...
 if exist TooManyItems_ED_v%VER%.zip del TooManyItems_ED_v%VER%.zip
-powershell -NoProfile -Command "Compress-Archive -Path 'dist\TooManyItems' -DestinationPath 'TooManyItems_ED_v%VER%.zip'"
+rem tar (wbudowany w Windows 10/11) zapisuje sciezki w ZIP ze znakiem /, Compress-Archive zapisywal znak \
+tar -a -c -f "TooManyItems_ED_v%VER%.zip" -C dist TooManyItems
+if errorlevel 1 powershell -NoProfile -Command "Compress-Archive -Path 'dist\TooManyItems' -DestinationPath 'TooManyItems_ED_v%VER%.zip'"
 powershell -NoProfile -Command "Get-FileHash 'TooManyItems_ED_v%VER%.zip' -Algorithm SHA256 | ForEach-Object { $_.Hash } | Out-File -Encoding ascii 'TooManyItems_ED_v%VER%.sha256.txt'"
 
 echo.

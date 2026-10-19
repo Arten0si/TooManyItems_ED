@@ -87,4 +87,4 @@ Click [b]Diagnostics[/b] in the app and attach the files [i]diag.txt[/i] and [i]
 [*]The app is and will always be [b]100% free[/b]. Source code: [url=https://github.com/Arten0si/TooManyItems_ED]GitHub[/url] (MIT License – the license covers the app's code only, not game data or graphics).
 [/list]
 
-[center][size=2]Version 1.0.0 · tested with Enshrouded build 25988036 (October 16, 2026 update)[/size][/center]
+[center][size=2]Version 1.0.1 · tested with Enshrouded build 25988036 (October 16, 2026 update)[/size][/center]

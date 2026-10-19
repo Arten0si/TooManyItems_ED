@@ -1,4 +1,4 @@
-TooManyItems – Item Vault for Enshrouded            version 1.0.0
+TooManyItems – Item Vault for Enshrouded            version 1.0.1
 =====================================================================
 Unofficial, free fan tool. Enshrouded (c) Keen Games GmbH.
 Source code: https://github.com/Arten0si/TooManyItems_ED

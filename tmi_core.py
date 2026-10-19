@@ -64,7 +64,7 @@ BACKPACK_ROWS = {531058391: 1, 3728213390: 2, 3773368910: 3, 996296787: 4,
                  4231879756: 1, 4053516652: 2, 3131144042: 3}
 MAX_QTY = 9999
 
-APP_VERSION = "1.0.0"
+APP_VERSION = "1.0.1"
 # Ścieżki: w .exe (PyInstaller) pliki programu leżą w folderze tymczasowym/_internal (RES_DIR, tylko odczyt),
 # a ustawienia, dziennik i diag.txt zapisujemy obok TooManyItems.exe (APP_DIR) albo w %LOCALAPPDATA%.
 FROZEN = bool(getattr(sys, "frozen", False))
