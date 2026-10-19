@@ -1,0 +1,92 @@
+{ TooManyItems_ED – prototyp odświeżania rzędu ekwipunku
+  Build gry: 25988036
+
+  Hook w pętli gry, która ciągle przegląda rzędy ekwipunku (enshrouded.exe+EED13F).
+  Gdy pętla trafi na rząd o adresie tmiTargetRow i tmiRequest = 1,
+  wywołujemy funkcję gry "dostęp do zapisu" (enshrouded.exe+225B70)
+  dla tego rzędu – gra oznacza go jako zmieniony i (mamy nadzieję) odświeża ekran.
+
+  tmiHits  – licznik, ile razy pętla trafiła na wskazany rząd (diagnostyka)
+  tmiDone  – licznik wykonanych odświeżeń
+}
+[ENABLE]
+aobscanmodule(INVHOOK,enshrouded.exe,48 8B 38 48 85 FF 0F 84 F2 00 00 00 48 8D 6F 60)
+alloc(newmem,$1000,INVHOOK)
+label(return)
+label(skip)
+label(tmiRequest)
+label(tmiTargetRow)
+label(tmiCtx)
+label(tmiHits)
+label(tmiDone)
+registersymbol(INVHOOK)
+registersymbol(tmiRequest)
+registersymbol(tmiTargetRow)
+registersymbol(tmiHits)
+registersymbol(tmiDone)
+
+newmem:
+  mov [tmiCtx],rdi          // kontekst świata (zanim nadpiszemy rdi)
+  mov rdi,[rax]             // oryginalna instrukcja: rdi = adres slotów rzędu
+  cmp rdi,[tmiTargetRow]
+  jne skip
+  inc dword ptr [tmiHits]
+  cmp byte ptr [tmiRequest],1
+  jne skip
+  mov byte ptr [tmiRequest],0
+  push rax
+  push rcx
+  push rdx
+  push r8
+  push r9
+  push r10
+  push r11
+  push rbp
+  mov rbp,rsp
+  and rsp,FFFFFFFFFFFFFFF0
+  sub rsp,20
+  mov rcx,[tmiCtx]
+  mov rdx,[rbp+230]         // typ komponentu rzędu = [rsp_oryg+1F0]
+  mov r8d,ebx               // uchwyt (entity) rzędu
+  call enshrouded.exe+225B70
+  inc dword ptr [tmiDone]
+  mov rsp,rbp
+  pop rbp
+  pop r11
+  pop r10
+  pop r9
+  pop r8
+  pop rdx
+  pop rcx
+  pop rax
+skip:
+  test rdi,rdi              // oryginalna instrukcja
+  jmp return
+
+align 10
+tmiTargetRow:
+  dq 0
+tmiCtx:
+  dq 0
+tmiHits:
+  dd 0
+tmiDone:
+  dd 0
+tmiRequest:
+  db 0
+
+INVHOOK:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+INVHOOK:
+  db 48 8B 38 48 85 FF
+
+unregistersymbol(INVHOOK)
+unregistersymbol(tmiRequest)
+unregistersymbol(tmiTargetRow)
+unregistersymbol(tmiHits)
+unregistersymbol(tmiDone)
+dealloc(newmem)

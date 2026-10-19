@@ -1,0 +1,40 @@
+MIT License
+
+Copyright (c) 2026 Arten0si
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+-------------------------------------------------------------------------------
+SCOPE OF THIS LICENSE
+
+The MIT License above covers ONLY the source code of TooManyItems_ED
+(the .py, .js, .html, .css, .s, .bat and .spec files written for this project).
+
+It does NOT cover, and grants no rights to, any data or graphics from the game:
+Enshrouded, its item names, descriptions, statistics, translations, icons and
+all other game assets are (c) Keen Games GmbH. The item database files
+(items_db.json, items_texts.json) and the item icons shipped in the release
+package were extracted from the game files and from The Official Enshrouded
+Wiki (enshrouded.wiki.gg) and remain the property of their respective owners.
+
+The fonts Cinzel and Alegreya Sans are licensed under the SIL Open Font
+License 1.1 (see gui/fonts/*-OFL.txt).
+
+TooManyItems_ED is an unofficial, free fan tool. It is not affiliated with,
+endorsed by or supported by Keen Games GmbH.

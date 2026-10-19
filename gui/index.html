@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TooManyItems – Enshrouded</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="app">
+
+<header class="top">
+  <div class="brand">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#e0b563" stroke-width="1.4" aria-hidden="true"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/><circle cx="12" cy="11" r="2.2"/></svg>
+    <div class="brand-txt">
+      <span class="brand-name">TooManyItems</span>
+      <span class="brand-sub" data-i18n="sub">skarbiec przedmiotów · Enshrouded</span>
+    </div>
+  </div>
+  <label class="search">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a9a493" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+    <span class="sr" data-i18n="search">Szukaj</span>
+    <input id="q" type="search" placeholder="Szukaj: nazwa, ID albo nazwa wewnętrzna…" title="Ctrl+F – szukaj, Esc – wyczyść" autocomplete="off" spellcheck="false">
+  </label>
+  <label class="lang"><span data-i18n="lang">Język</span>
+    <select id="lang"></select>
+  </label>
+  <button type="button" id="conn" class="conn off" title="Kliknij, aby połączyć ponownie">
+    <span class="dot"></span><span id="connTxt">Brak połączenia z grą</span>
+  </button>
+</header>
+
+<div class="body">
+  <nav class="cats" aria-label="Kategorie">
+    <div class="cats-h" data-i18n="catsH">KATEGORIE</div>
+    <div id="cats"></div>
+  </nav>
+
+  <main class="main">
+    <div class="main-h">
+      <div class="title-row">
+        <h1 id="catTitle"></h1>
+        <span id="count" class="muted"></span>
+      </div>
+      <div class="filters">
+        <div role="group" aria-label="Rzadkość" id="rar" class="rar"></div>
+        <label class="sort"><span data-i18n="sort">Sortuj</span>
+          <select id="sort">
+            <option value="rarity" data-i18n="sRarity">rzadkość</option>
+            <option value="name" data-i18n="sName">nazwa</option>
+            <option value="level" data-i18n="sLevel">poziom</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div id="grid" class="grid" role="listbox" aria-label="Przedmioty" tabindex="0"></div>
+    <div id="empty" class="empty" hidden data-i18n="empty"></div>
+  </main>
+
+  <aside class="side" aria-label="Szczegóły przedmiotu">
+    <div id="card" class="card"></div>
+    <div class="actions">
+      <div class="qty-row">
+        <label for="qty" class="muted" data-i18n="qty">Ilość</label>
+        <input id="qty" type="number" value="1" min="1" max="9999">
+        <button type="button" id="one" class="btn">1</button>
+        <button type="button" id="full" class="btn" data-i18n="full">Pełny stos</button>
+      </div>
+      <button type="button" id="add" class="add" data-i18n="add">DODAJ DO EKWIPUNKU</button>
+    </div>
+  </aside>
+</div>
+
+<footer class="foot">
+  <span id="status" class="status"></span>
+  <span id="legal" class="legal">Nieoficjalne narzędzie fanowskie · Enshrouded © Keen Games</span>
+  <div class="foot-btns">
+    <button type="button" id="rescue" class="btn" data-i18n="rescue">Odzyskaj ukryte</button>
+    <button type="button" id="diag" class="btn" data-i18n="diag">Diagnostyka</button>
+    <button type="button" id="reconnect" class="btn" data-i18n="reconnect">Połącz z grą</button>
+  </div>
+</footer>
+</div>
+
+<div id="tip" class="tip" role="tooltip" hidden></div>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

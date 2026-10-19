@@ -1,0 +1,90 @@
+[center][size=6][b]TooManyItems – Item Vault for Enshrouded[/b][/size]
+[size=3][i]Browse every item in the game and add any of them to your inventory with one click.[/i][/size][/center]
+
+[line]
+
+[size=5][b]What is it?[/b][/size]
+TooManyItems is a free, standalone companion app for Enshrouded. It shows the complete list of [b]3,900+ items[/b] from the game – weapons, armor, spells, food, building blocks, materials, gems and more – in a clean, game-styled window. Pick an item, choose the amount, click [b]Add to inventory[/b], and it appears in your backpack instantly while you play.
+
+No save editing, no restarting the game, and [b]nothing is put into the game folder[/b] – no DLL, no file changes. The app runs on its own, so it works great on a second monitor.
+
+[line]
+
+[size=5][b]Features[/b][/size]
+[list]
+[*][b]One-click adding[/b] – items appear in your inventory immediately and stack with what you already carry.
+[*][b]Added the way the game does it[/b] – items are created through the game's own inventory functions (like loot), so weapons, armor and backpacks are fully working right away and survive saving and reloading.
+[*][b]Choose the rarity[/b] of loot weapons and armor (only the rarities the game allows) – the game creates exactly that one.
+[*][b]Categories with sub-categories[/b] – e.g. Building → Blocks, Crafting stations, Furniture, Lighting, Doors & windows…
+[*][b]Item cards[/b] – rarity, item level, all stats, perks, damage and protection types, and the in-game description, taken straight from the game files.
+[*][b]Hover tooltips[/b] – rest the mouse on an item (or right-click it) for a quick summary.
+[*][b]Icons for almost every item[/b], including high-quality renders.
+[*][b]Fast search[/b] by name, item ID or internal name – works without accents too.
+[*][b]Filters[/b] by category and rarity, sorting by rarity, name or level.
+[*][b]15 languages[/b] – item texts come from the game itself, the window is translated too. Follows your game language automatically.
+[*][b]Full stack[/b] button, keyboard shortcuts (Enter / double-click to add, arrows to move, Ctrl+F to search).
+[*][b]Recover hidden items[/b] – moves items stuck in invisible backpack slots back into view.
+[*][b]Safe by design[/b] – if the app is not 100% sure where your inventory is, it writes nothing and tells you why.
+[/list]
+
+[line]
+
+[size=5][b]How is this different from Creative Mode?[/b][/size]
+[url=https://www.nexusmods.com/enshrouded/mods/146]Creative Mode[/url] by Phoenix1355 is an excellent in-game menu (installed as [i]dinput8.dll[/i] in the game folder) with flying, creative building, gamepad support, multiplayer and dedicated servers. If you want all of that – go for it.
+
+TooManyItems is a smaller tool with a different focus:
+[list]
+[*][b]Nothing in the game folder[/b] – you just start an .exe next to the game and close it when you're done.
+[*][b]Separate window[/b] – browse comfortably on a second monitor while the game keeps running.
+[*][b]Full item cards[/b] – stats, perks, levels, damage and protection types and descriptions in 15 languages, so you can compare items before taking them.
+[*][b]3,900+ items with icons[/b].
+[/list]
+What it does [b]not[/b] do: flying, creative mode, gamepad, joining other people's servers or dedicated servers (single-player and worlds you host only).
+
+[line]
+
+[size=5][b]Requirements[/b][/size]
+[list]
+[*]Windows 10 / 11 (64-bit)
+[*]Enshrouded (Steam)
+[*]Microsoft Edge WebView2 Runtime – already included in Windows 11 and most Windows 10 systems
+[/list]
+
+[line]
+
+[size=5][b]Installation & usage[/b][/size]
+[list=1]
+[*]Download and unpack the archive anywhere you like (not inside the game folder).
+[*]Start Enshrouded and load your world.
+[*]Run [b]TooManyItems.exe[/b] – it connects to the game automatically (green "Connected to game" badge).
+[*]Search for an item, set the amount and click [b]Add to inventory[/b].
+[/list]
+Nothing in the game folder is changed. To uninstall, just delete the app folder.
+
+[line]
+
+[size=5][b]Good to know[/b][/size]
+[list]
+[*][b]Works in single-player and on worlds you host yourself.[/b] It cannot add items when you join someone else's server – the real inventory lives on their PC. Hosting with friends has not been fully tested yet.
+[*][b]Game updates:[/b] the app looks up the game functions it needs by itself, so most patches should not break it. If a big update changes how the inventory works, the badge shows [b]"Game version not supported"[/b] – the app then changes nothing in the game (your world is safe) until an update is released here.
+[*][b]Antivirus warnings:[/b] the app talks to the running game process, the same way trainers do, so some antivirus programs may flag it as a false positive. The full source code is on GitHub so anyone can check what it does: [url=https://github.com/Arten0si/TooManyItems_ED]github.com/Arten0si/TooManyItems_ED[/url]
+[*][b]Backups:[/b] as with any tool that touches your game, it doesn't hurt to back up your saves ([i]%LocalAppData%\Enshrouded\Saves[/i]) before using it on your main world.
+[/list]
+
+[line]
+
+[size=5][b]Problems?[/b][/size]
+Click [b]Diagnostics[/b] in the app and attach the files [i]diag.txt[/i] and [i]tmi_gui.log[/i] (from the app folder) to your bug report, together with your game version. That usually tells me exactly what went wrong.
+
+[line]
+
+[size=5][b]Credits & legal[/b][/size]
+[list]
+[*][b]Enshrouded[/b] and all item names, texts and graphics are © [b]Keen Games GmbH[/b]. This is an unofficial, free fan tool and is not affiliated with or endorsed by Keen Games.
+[*]Item icons: extracted from the game files and from [url=https://enshrouded.wiki.gg]The Official Enshrouded Wiki[/url] – thanks to all wiki contributors.
+[*]Game file formats: thanks to Brabb3l for [url=https://github.com/Brabb3l/kfc-parser]kfc-parser[/url].
+[*]Fonts: Cinzel and Alegreya Sans (SIL Open Font License).
+[*]The app is and will always be [b]100% free[/b]. Source code: [url=https://github.com/Arten0si/TooManyItems_ED]GitHub[/url] (MIT License – the license covers the app's code only, not game data or graphics).
+[/list]
+
+[center][size=2]Version 1.0.0 · tested with Enshrouded build 25988036 (October 16, 2026 update)[/size][/center]
